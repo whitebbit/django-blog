@@ -1,0 +1,65 @@
+{% extends "main.html" %}
+
+{% block content %}
+
+<style>
+    .post-container{
+        display: grid;
+        grid-template-columns: 1fr 2fr 1fr;
+    }
+</style>
+
+<div class="post-container">
+
+    <div></div>
+
+    <div>
+        <div>
+            {% if request.user.is_superuser %}
+            <a href="{% url 'update_post' post.id %}">Редактировать</a>
+            <a href="{% url 'delete_post' post.id %}">Удалить</a>
+            {% endif %}
+
+            <h5>{{post.topic}}</h5>
+            <h1>{{post.title}}</h1>
+            <hr>
+            <p>{{post.text}}</p>
+            <small>{{post.created|date:"d:m:Y H:i"}} | @{{post.author.username}}</small>
+            <hr>
+        </div>
+
+        <div>
+        <div class="comment-wrapper">
+            <h3>Комментарии</h3>
+
+            {% for comment in comments %}
+
+            <div>
+                <small>@{{comment.user}} | {{comment.created|date:"d:m:Y H:i"}}</small>
+                {% if request.user.is_superuser or request.user == comment.user%}
+                <a href="{% url 'delete_comment' comment.id %}">Удалить</a>
+                {% endif %}
+                <p>{{comment.body}}</p>
+                <hr>
+            </div>
+
+            {% endfor %}
+        </div>
+        {% if request.user.is_authenticated %}
+        <div class="comment-form">
+            <form method="POST" action="">
+                {% csrf_token %}
+                <input type="text" name="body" placeholder="Комментарий...">
+            </form>
+        </div>
+        {% endif %}
+    </div>
+    </div>
+
+
+
+
+
+</div>
+
+{% endblock content %}
