@@ -14,7 +14,7 @@ class UserViewSet(viewsets.ModelViewSet):
         
         posts = instance.post_set.all()
         data = serializer.data
-        data["posts"] = [p.id for p in posts]
+        data["posts"] = [(p.id, p.title)for p in posts]
         return Response(data)
     
 class PostViewSet(viewsets.ModelViewSet):
