@@ -66,7 +66,7 @@ def home(request):
 
 
 def post(request, pk):
-    current_post = Post.objects.get(title=pk)
+    current_post = Post.objects.get(id=pk)
     comments = current_post.comment_set.all().order_by("-created")
 
     if request.method == "POST":

@@ -3,6 +3,11 @@
 {% block content %}
 
 <h1>{{user}}</h1>
+{% for post in posts %}
+    <div>
+        <h3><a href="{% url 'post' post.id %}">{{post}}</a></h3>
+    </div>
+{% endfor %}
 <hr>
 <small>Присоединился  {{user.date_joined|date:"d:m:Y H:i:s"}}</small>
 

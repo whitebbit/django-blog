@@ -15,7 +15,7 @@
 
     <div>
         <div>
-            {% if request.user.is_superuser %}
+            {% if request.user == post.author %}
             <a href="{% url 'update_post' post.id %}">Редактировать</a>
             <a href="{% url 'delete_post' post.id %}">Удалить</a>
             {% endif %}
@@ -29,7 +29,7 @@
         </div>
 
         <div>
-        <div class="comment-wrapper">
+      <!--   <div class="comment-wrapper">
             <h3>Комментарии</h3>
 
             {% for comment in comments %}
@@ -52,7 +52,7 @@
                 <input type="text" name="body" placeholder="Комментарий...">
             </form>
         </div>
-        {% endif %}
+        {% endif %} -->
     </div>
     </div>
 
