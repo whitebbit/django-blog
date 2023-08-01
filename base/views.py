@@ -59,17 +59,9 @@ def register_page(request):
 
 
 def home(request):
-    q = request.GET.get("q") if request.GET.get("q") is not None else ""
-    posts = Post.objects.filter(
-        Q(topic__name__icontains=q.capitalize()) |
-        Q(title__icontains=q) |
-        Q(text__icontains=q)
-    )
-
-    topics = Topic.objects.all()
-    post_count = posts.count()
-
-    context = {"posts": posts, "topics": topics, "post_count": post_count}
+    users = User.objects.all()
+    context = {"users": users} 
+    
     return render(request, "base/home.html", context)
 
 
