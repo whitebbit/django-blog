@@ -12,7 +12,7 @@ class Topic(models.Model):
 class Post(models.Model):
     title = models.CharField(max_length=200)
     text = models.TextField(null=False, blank=True)
-    topic = models.ForeignKey(Topic, on_delete=models.SET_NULL, null=True)
+    #topic = models.ForeignKey(Topic, on_delete=models.SET_NULL, null=True)
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
