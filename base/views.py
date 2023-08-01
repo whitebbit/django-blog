@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect
 from django.db.models import Q
-from .models import Post, Topic, Comment
+from .models import Post, Comment
 from .forms import PostForm
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
+
+
 
 
 def login_page(request):
@@ -134,3 +136,5 @@ def user_profile(request, pk):
     posts = user.post_set.all()
     context = {"user": user, "posts": posts}
     return render(request, "base/profile.html", context)
+
+

@@ -1,15 +1,15 @@
 from django.db import models
 from django.contrib.auth.models import User
+from base.utils.model_abstracts import Model
 
-
-class Topic(models.Model):
+class Topic(Model):
     name = models.CharField(max_length=200)
 
     def __str__(self):
         return self.name
 
 
-class Post(models.Model):
+class Post(Model):
     title = models.CharField(max_length=200)
     text = models.TextField(null=False, blank=True)
     #topic = models.ForeignKey(Topic, on_delete=models.SET_NULL, null=True)
@@ -24,7 +24,7 @@ class Post(models.Model):
         return self.title
 
 
-class Comment(models.Model):
+class Comment(Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     body = models.TextField()
