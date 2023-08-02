@@ -25,4 +25,6 @@ urlpatterns = [
     path("profile/<str:pk>/", views.user_profile, name="user_profile"),
     
     path('api/', include(router.urls)),
+
+    path('api/', include(router.urls)),
 ]
