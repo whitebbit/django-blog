@@ -1,22 +1,21 @@
 from django.shortcuts import render, redirect
-from django.db.models import Q
-from .models import Post, Comment
+from .models import Post
 from .forms import PostForm
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 
+#Все функции в данном скрипте можно заменить на соответсвущие им классы для поддержания ООП структуры
 
-
-
+#Функция отображения страницы логининга 
 def login_page(request):
     page = "login"
     if request.user.is_authenticated:
         return redirect("home")
 
     if request.method == "POST":
-        username = request.POST.get("username").lower()
+        username = request.POST.get("username")
         password = request.POST.get("password")
 
         try:
@@ -35,12 +34,12 @@ def login_page(request):
     context = {"page": page}
     return render(request, "base/login_register.html", context)
 
-
+#Функция отображения страницы логаута 
 def logout_page(request):
     logout(request)
     return redirect("home")
 
-
+#Функция отображения страницы регистрации 
 def register_page(request):
     page = "register"
     form = UserCreationForm()
@@ -59,14 +58,14 @@ def register_page(request):
     context = {"page": page, "form": form}
     return render(request, "base/login_register.html", context)
 
-
+#Функция отображения главной страницы 
 def home(request):
     users = User.objects.all()
     context = {"users": users} 
     
     return render(request, "base/home.html", context)
 
-
+#Функция отображения страницы поста
 def post(request, pk):
     current_post = Post.objects.get(id=pk)
     comments = current_post.comment_set.all().order_by("-created")
@@ -82,7 +81,7 @@ def post(request, pk):
     context = {"post": current_post, "comments": comments}
     return render(request, "base/post.html", context)
 
-
+#Функция отображения страницы создания нового поста
 def create_post(request):
     form = PostForm()
     if request.method == "POST":
@@ -96,7 +95,7 @@ def create_post(request):
     context = {"form": form}
     return render(request, "base/post_form.html", context)
 
-
+#Функция отображения страницы редактирования поста
 def update_post(request, pk):
     current_post = Post.objects.get(id=pk)
     form = PostForm(instance=current_post)
@@ -110,7 +109,7 @@ def update_post(request, pk):
     context = {"form": form}
     return render(request, "base/post_form.html", context)
 
-
+#Функция отображения страницы удаления поста
 def delete_post(request, pk):
     current_post = Post.objects.get(id=pk)
 
@@ -121,7 +120,7 @@ def delete_post(request, pk):
     return render(request, "base/delete.html", {"obj": current_post})
 
 
-def delete_comment(request, pk):
+""" def delete_comment(request, pk):
     comment = Comment.objects.get(id=pk)
 
     if request.method == "POST":
@@ -129,8 +128,9 @@ def delete_comment(request, pk):
         return redirect("home")
 
     return render(request, "base/delete.html", {"obj": comment})
+ """
 
-
+#Функция отображения страницы профиля пользователя
 def user_profile(request, pk):
     user = User.objects.get(username=pk)
     posts = user.post_set.all()
