@@ -1,4 +1,4 @@
-# REST-FastAPI
+# Django BLog
 
 
 ## Загрузите проект на свой ПК
